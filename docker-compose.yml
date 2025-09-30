@@ -1,6 +1,7 @@
 services:
   app:
     build: nextapp/.
+    container_name: next-app
     ports:
       - "3000:3000"
     environment:
