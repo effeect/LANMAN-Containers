@@ -1,0 +1,21 @@
+services:
+  app:
+    build: nextapp/.
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+    volumes:
+      - .:/nextapp/app
+      - /nextapp/node_modules
+  ansible:
+    build: ansible/.
+    container_name: ansible-runner
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./ansible:/ansible
+    working_dir: /app
+    entrypoint: /bin/bash
+    tty: true
+  # InfluxDb, responsible for metrics

@@ -1,0 +1,14 @@
+{
+  "name": "ansible-backend",
+  "version": "1.0.0",
+  "description": "Express API to trigger Ansible playbooks",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "author": "Oliver",
+  "license": "MIT"
+}

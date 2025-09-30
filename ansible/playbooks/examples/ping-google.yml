@@ -1,0 +1,16 @@
+---
+- name: Ping a website using HTTP GET
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Check if Google.com is reachable
+      uri:
+        url: http://www.google.com
+        method: GET
+        return_content: no
+        status_code: 200
+      register: website_status
+
+    - name: Show website response
+      debug:
+        msg: "Website responded with status: {{ website_status.status }}"
