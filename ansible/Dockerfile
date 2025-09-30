@@ -24,6 +24,7 @@ COPY . .
 # Expose backend port
 EXPOSE 4000
 
-CMD ["npm", "install"]
+RUN npm install
+RUN npm install cors
 # Start the Express server
 CMD ["npm", "start"]

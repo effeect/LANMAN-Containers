@@ -6,8 +6,9 @@ services:
     environment:
       NODE_ENV: development
     volumes:
-      - .:/nextapp/app
-      - /nextapp/node_modules
+      - ./nextapp:/app
+    networks:
+      test:
   ansible:
     build: ansible/.
     container_name: ansible-runner
@@ -16,6 +17,10 @@ services:
     volumes:
       - ./ansible:/ansible
     working_dir: /app
-    entrypoint: /bin/bash
-    tty: true
+    networks:
+      test:
   # InfluxDb, responsible for metrics
+
+networks:
+  test:
+    driver: bridge

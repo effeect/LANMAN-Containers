@@ -1,10 +1,14 @@
-FROM node:20-alpine
+FROM node:20-bullseye
 WORKDIR /app
+
+# Install required libraries
+RUN apt-get update && apt-get install -y libstdc++6
+
 COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 3000
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev-arm"]
 
 # Stage 1: Build
 #FROM node:20-alpine AS builder
