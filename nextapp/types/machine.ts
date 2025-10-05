@@ -1,0 +1,6 @@
+export interface Machine {
+  id: string;
+  name: string;
+  username: string;
+  password: string;
+}

@@ -41,4 +41,53 @@ app.get("/run-playbook", (req, res) => {
   );
 });
 
+app.get("/api/machines", (req, res) => {
+  // Test Data for the API
+  const machines = [
+    {
+      id: "1",
+      name: "Machine Alpha",
+      username: "alpha_user",
+      password: "alpha_pass",
+    },
+    {
+      id: "2",
+      name: "Machine Beta",
+      username: "beta_user",
+      password: "beta_pass",
+    },
+  ];
+  res.json(machines);
+});
+
+// POST endpoint to add a machine
+app.post("/api/machines", (req, res) => {
+  /* 
+  POST /api/machines
+Content-Type: application/json
+
+{
+  "username": "gamma_user",
+  "password": "gamma_pass"
+}
+  */
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ error: "Username and password are required" });
+  }
+
+  const newMachine = {
+    id: uuidv4(),
+    name: `Machine ${username}`,
+    username,
+    password,
+  };
+
+  machines.push(newMachine);
+  res.status(201).json(newMachine);
+});
+
 app.listen(4000, "0.0.0.0", () => console.log("Backend running on port 4000"));
