@@ -1,0 +1,8 @@
+---
+- name: Open a program on Windows
+  hosts: windows
+  gather_facts: no
+  tasks:
+    - name: Launch Notepad
+      community.windows.win_shell:
+        cmd: start notepad.exe

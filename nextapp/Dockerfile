@@ -4,6 +4,8 @@ WORKDIR /app
 # Install required libraries
 RUN apt-get update && apt-get install -y libstdc++6
 
+ENV NEXT_PUBLIC_API_URL=http://localhost:4000/api
+
 COPY package*.json ./
 RUN npm install
 COPY . .
