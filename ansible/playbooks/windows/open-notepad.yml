@@ -1,9 +1,16 @@
 ---
 - name: Open a program on Windows
-  hosts: winhost
+  hosts: all
   gather_facts: no
   collections:
     - community.windows
+  vars:
+    ansible_user: "{{ username }}"
+    ansible_password: "{{ password }}"
+    ansible_connection: winrm
+    ansible_port: 5985
+    ansible_winrm_transport: ntlm
+    ansible_winrm_server_cert_validation: ignore
   tasks:
     - name: Ping the host to check there is connectivity
       win_ping:

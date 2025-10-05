@@ -26,7 +26,15 @@ export default async function MachinePage({
       <CommandButton
         name="Run a ping check to google"
         endpoint="v2/ping-google"
+        machine_id={machine._id}
+        job="windows/open-notepad"
       />
+      <CommandButton
+        name="Run a Ansible Job with vars"
+        endpoint="String"
+        machine_id={machine._id}
+        job="windows/open"
+      ></CommandButton>
     </div>
   );
 }

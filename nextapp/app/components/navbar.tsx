@@ -12,14 +12,13 @@ export default function Navbar() {
           </div>
           <ul className="flex space-x-6 text-gray-700 font-medium">
             {[
-              { href: "/machine", label: "Machines" },
               { href: "/add-machine", label: "Add Machine" },
               {
                 href: "https://bsky.app/profile/effeect.bsky.social",
                 label: "Github",
               },
               {
-                href: "https://www.linkedin.com/in/oliver-dimes-793b31194/",
+                href: "/settings",
                 label: "Settings",
               },
             ].map(({ href, label }) => (

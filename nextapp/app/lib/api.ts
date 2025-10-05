@@ -17,6 +17,47 @@ export const getMachineById = async (id: string) => {
   return res.json();
 };
 
+// Running an Ansible job here
+export const runAnsibleJob = async (
+  machineId: string,
+  job: string,
+  onLine: (line: string) => void
+) => {
+  try {
+    const res = await fetch(`${API_BASE}/v2/ansible`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ machineId, job }),
+    });
+
+    const reader = res.body?.getReader();
+    const decoder = new TextDecoder("utf-8");
+
+    if (!reader) throw new Error("No response body");
+
+    let partial = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      partial += decoder.decode(value, { stream: true });
+      const lines = partial.split("\n");
+      partial = lines.pop() || "";
+
+      for (const line of lines) {
+        onLine(line);
+      }
+    }
+
+    if (partial) {
+      onLine(partial);
+    }
+  } catch (error) {
+    console.error("Error running Ansible job:", error);
+    onLine("Failed to run Ansible job.");
+  }
+};
+
 export const getMachinePingStatus = async (id: string) => {
   try {
     const res = await fetch(`${API_BASE}/v2/jobs/ping`, {
