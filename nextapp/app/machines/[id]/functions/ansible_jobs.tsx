@@ -1,6 +1,6 @@
 "use client";
 // NEEDS A LOT OF WORK
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export async function runCommand(
   endpoint: string,
@@ -73,6 +73,7 @@ export default function CommandButton({
   endpoint: string;
 }) {
   const [output, setOutput] = useState<string[]>([]);
+  const outputRef = useRef<HTMLPreElement>(null);
 
   const handleRun = () => {
     setOutput([]); // clear previous output
@@ -80,6 +81,13 @@ export default function CommandButton({
       setOutput((prev) => [...prev, line]);
     });
   };
+
+  // Auto-scroll to bottom when output updates
+  useEffect(() => {
+    if (outputRef.current) {
+      outputRef.current.scrollTop = outputRef.current.scrollHeight;
+    }
+  }, [output]);
 
   return (
     <div className="my-4">
@@ -90,7 +98,10 @@ export default function CommandButton({
         {name}
       </button>
 
-      <pre className="mt-4 p-4 bg-black text-green-300 rounded max-h-96 overflow-y-auto whitespace-pre-wrap">
+      <pre
+        ref={outputRef}
+        className="mt-4 p-4 bg-black text-green-300 rounded max-h-96 overflow-y-auto whitespace-pre-wrap"
+      >
         {output.join("\n")}
       </pre>
     </div>
