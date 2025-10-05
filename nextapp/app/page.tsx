@@ -15,18 +15,25 @@ export default function HomePage() {
   return (
     <div className="mx-auto p-6 bg-white shadow">
       <h1 className="text-3xl font-bold mb-6 text-black">Machines</h1>
-      <ul className="space-y-4 mb-6">
-        {machines.map((machine) => (
-          <li key={machine._id}>
-            <Link
-              href={`/machines/${machine._id}`}
-              className="block px-4 py-2 bg-gray-100 text-black hover:bg-gray-200 rounded transition"
-            >
-              {machine.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {/* Conditional to display a message saying there are no machines, please add them*/}
+
+      {machines.length > 0 ? (
+        <ul className="space-y-4 mb-6">
+          {machines.map((machine) => (
+            <li key={machine._id}>
+              <Link
+                href={`/machines/${machine._id}`}
+                className="block px-4 py-2 bg-gray-100 text-black hover:bg-gray-200 rounded transition"
+              >
+                {machine.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mb-6 text-black">There are no machines.</p>
+      )}
+
       <Link
         href="/add-machine"
         className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"

@@ -1,7 +1,8 @@
 // app/machines/[id]/page.tsx
 import { notFound } from "next/navigation";
 import { getMachineById } from "@/lib/api";
-import PingStatus from "./ping";
+import PingStatus from "./functions/ping";
+import CommandButton from "./functions/ansible_jobs";
 
 export default async function MachinePage({
   params,
@@ -20,8 +21,12 @@ export default async function MachinePage({
       <p className=" text-black ">Username : {machine.username}</p>
       <p className=" text-black ">IP Address : {machine.ip_address}</p>
       <p className=" text-black ">ID : {machine._id}</p>
-      <p className=" text-black ">Created At : PLACEHOLDER</p>
+      <p className=" text-black ">Created At : {machine.date}</p>
       <PingStatus id={machine._id} />
+      <CommandButton
+        name="Run a ping check to google"
+        endpoint="v2/ping-google"
+      />
     </div>
   );
 }

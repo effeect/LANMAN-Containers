@@ -11,7 +11,7 @@ const app = express();
 const mongoose = require("mongoose");
 const ping = require("ping");
 // Our App Routes
-const example_google = require("./app_routes/example-google");
+const example_google = require("./app_routes/ping-google");
 const handle_machines = require("./app_routes/handle-machines");
 const ping_machines = require("./app_routes/ping-machine");
 
@@ -38,6 +38,9 @@ const Machine = require("./models/Machine");
 // Running the App stuff from here, keeps version control a bit tidier for this work
 handle_machines.run(app, Machine);
 ping_machines.run(app, Machine);
+
+// Used for Debugging
+example_google.run(app, Machine);
 
 app.get("/api/open-notepad", (req, res) => {
   exec(

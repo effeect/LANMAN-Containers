@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getMachinePingStatus } from "../../lib/api";
+import { getMachinePingStatus } from "../../../lib/api";
 
 export default function PingStatus({ id }: { id: string }) {
   const [ping, setPing] = useState(null);

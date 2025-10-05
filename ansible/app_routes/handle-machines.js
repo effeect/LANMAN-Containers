@@ -1,9 +1,7 @@
 // Handle Machines
 // This one is responsible for running the get/post/delete requests for the machines API
 export async function run(app, Machine) {
-  //Below is to handle the machine request :
-
-  // Handle Machine Requests
+  // Post Request : Add machines
   app.post("/api/v2/machines", async (req, res) => {
     const { name, username, password, ip_address } = req.body;
     console.log(ip_address);
@@ -28,12 +26,14 @@ export async function run(app, Machine) {
         error: "Machine Name Conflict. Please refer to Documentation",
       });
     }
-
+    // Adding a creation date done server side
+    const created_on = new Date().toISOString();
     const machine = new Machine({
       name,
       username,
       password,
       ip_address,
+      created_on,
     });
 
     try {
@@ -44,6 +44,7 @@ export async function run(app, Machine) {
     }
   });
 
+  // GET request : Get Machine
   app.get("/api/v2/machines", async (req, res) => {
     try {
       const machines = await Machine.find();

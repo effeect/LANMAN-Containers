@@ -5,6 +5,7 @@ const machineSchema = new mongoose.Schema({
   username: String,
   password: String,
   ip_address: String,
+  date: String,
 });
 
 module.exports = mongoose.model("Machine", machineSchema);

@@ -3,11 +3,14 @@
 import { useState } from "react";
 import { addMachine } from "../lib/api";
 import { useEffect } from "react";
+
 export default function AddMachinePage() {
+  // Variables
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [ip_address, setIp_address] = useState("");
+
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
