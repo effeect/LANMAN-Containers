@@ -1,8 +1,10 @@
 ---
 - name: Open a program on Windows
-  hosts: windows
+  hosts: winhost
   gather_facts: no
+  collections:
+    - community.windows
   tasks:
     - name: Launch Notepad
-      community.windows.win_shell:
-        cmd: start notepad.exe
+      win_shell:
+        cmd: echo "Hello from Ansible" > C:\Temp\hello.txt

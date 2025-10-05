@@ -11,6 +11,7 @@ RUN apt-get update && \
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
+RUN ansible-galaxy collection install community.windows
 # Create app directory
 WORKDIR /app
 

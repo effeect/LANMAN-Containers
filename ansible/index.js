@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.get("/open-notepad", (req, res) => {
+app.get("/api/open-notepad", (req, res) => {
   exec(
     "ansible-playbook -i inventory/hosts.yml playbooks/windows/open-notepad.yml",
     (err, stdout, stderr) => {
