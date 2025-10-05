@@ -25,8 +25,8 @@ app.get("/api/open-notepad", (req, res) => {
     "ansible-playbook -i inventory/hosts.yml playbooks/windows/open-notepad.yml",
     (err, stdout, stderr) => {
       if (err) return res.status(500).send(stderr);
-
       res.send(stdout);
+      res.send("hello");
     }
   );
 });

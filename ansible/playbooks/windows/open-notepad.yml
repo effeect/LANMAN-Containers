@@ -5,6 +5,7 @@
   collections:
     - community.windows
   tasks:
+    - name: Ping the host to check there is connectivity
+      win_ping:
     - name: Launch Notepad
-      win_shell:
-        cmd: echo "Hello from Ansible" > C:\Temp\hello.txt
+      win_shell: echo "Hello from Ansible" > C:\Temp\notepad.txt

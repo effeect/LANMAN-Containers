@@ -9,7 +9,7 @@ const propertiesPage = () => {
   const { id } = useParams();
 
   const name = searchParams.get("name");
-
+  console.log(id);
   return (
     <div>
       <button onClick={() => router.push("/")} className="bg-blue-500 p-2">
