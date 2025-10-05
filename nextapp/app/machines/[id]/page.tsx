@@ -1,13 +1,14 @@
 // app/machines/[id]/page.tsx
 import { notFound } from "next/navigation";
-import { getMachineById } from "../../lib/api";
+import { getMachineById } from "@/lib/api";
 
 export default async function MachinePage({
   params,
 }: {
   params: { id: string };
 }) {
-  const machine = await getMachineById(params.id);
+  const { id } = await params;
+  const machine = await getMachineById(id);
   if (!machine) return notFound();
 
   return (
