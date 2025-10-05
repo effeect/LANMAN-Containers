@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { addMachine } from "../lib/api";
-
+import { useEffect } from "react";
 export default function AddMachinePage() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [ip_address, setIp_address] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -18,11 +19,13 @@ export default function AddMachinePage() {
     setError("");
 
     try {
-      await addMachine({ name, username, password });
+      await addMachine({ name, username, password, ip_address });
+      // Placeholder
       setStatus("success");
       setName("");
       setUsername("");
       setPassword("");
+      setIp_address("");
     } catch (err: any) {
       setStatus("error");
       setError(err.message || "Failed to add machine");
@@ -38,14 +41,21 @@ export default function AddMachinePage() {
           onChange={(e) => setName(e.target.value)}
           placeholder="Machine Name"
           required
-          className="w-full px-4 py-2 border rounded focus:outline-none focus:ring"
+          className="w-full px-4 py-2 border text-black rounded focus:outline-none focus:ring"
+        />
+        <input
+          value={ip_address}
+          onChange={(e) => setIp_address(e.target.value)}
+          placeholder="IP Address"
+          required
+          className="w-full px-4 py-2 border text-black rounded focus:outline-none focus:ring"
         />
         <input
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Windows Username"
           required
-          className="w-full px-4 py-2 border rounded focus:outline-none focus:ring"
+          className="w-full px-4 py-2 border text-black rounded focus:outline-none focus:ring"
         />
         <input
           value={password}
@@ -53,7 +63,7 @@ export default function AddMachinePage() {
           placeholder="Windows Password"
           required
           type="password"
-          className="w-full px-4 py-2 border rounded focus:outline-none focus:ring"
+          className="w-full px-4 py-2 border text-black rounded focus:outline-none focus:ring"
         />
         {status === "error" && <p className="text-red-600">{error}</p>}
         {status === "success" && (

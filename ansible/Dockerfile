@@ -25,6 +25,7 @@ COPY . .
 EXPOSE 4000
 
 RUN npm install
+RUN apt-get install -y iputils-ping
 RUN npm install cors
 # Start the Express server
 CMD ["npm", "start"]
