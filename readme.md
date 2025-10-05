@@ -1,10 +1,13 @@
 # LANMAN
 
-This project is a huge work in progress but it will be based in docker fyi
+This project is a huge work in progress but it will be based in Docker
 
 `docker compose up -d`
 
 Things to do:
+
+- Create a quickstart script
+- Lockdown MongoDb security wise
 
 - Get Windows Implementation working
   - Needs to be secure

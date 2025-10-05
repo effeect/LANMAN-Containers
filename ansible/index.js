@@ -1,10 +1,67 @@
+/*
+  All in one file to handle MongoDB management and Ansible based API calls
+*/
+require("dotenv").config();
+console.log(process.env.MONGO_INITDB_ROOT_USERNAME);
+console.log(process.env.MONGO_INITDB_ROOT_PASSWORD);
+
 const express = require("express");
 const { exec } = require("child_process");
 const app = express();
+const mongoose = require("mongoose");
 
 // CORS is required to do this
 const cors = require("cors");
 app.use(cors());
+// Below may need to be removed
+app.use(express.json());
+
+const mongoURI = `mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/machinesdb?authSource=admin`;
+
+mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.once("open", () => console.log("Connected to MongoDB"));
+
+//Below is to handle the machine request :
+const Machine = require("./models/Machine");
+
+// Handle Machine Requests
+app.post("/api/v2/machines", async (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({
+      error: "Windows Username and password are required in order to test this",
+    });
+  }
+
+  const machine = new Machine({
+    name: `Machine ${username}`,
+    username,
+    password,
+  });
+
+  try {
+    const savedMachine = await machine.save();
+    res.status(201).json(savedMachine);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to save machine" });
+  }
+});
+
+app.get("/api/v2/machines", async (req, res) => {
+  try {
+    const machines = await Machine.find();
+    res.json(machines);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch machines" });
+  }
+});
 
 app.get("/api/example-googles", (req, res) => {
   exec(
