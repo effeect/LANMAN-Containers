@@ -8,7 +8,7 @@ Things to do:
 
 - Create a quickstart script
 - Lockdown MongoDb security wise
-
+- Move Username/Passwords to some sort of vault password solution like Infisical or Mozilla SOPS
 - Get Windows Implementation working
   - Needs to be secure
 - Windows Playbooks needed :

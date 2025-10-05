@@ -17,8 +17,8 @@ export default function HomePage() {
       <h1>Machines</h1>
       <ul>
         {machines.map((machine) => (
-          <li key={machine.id}>
-            <Link href={`/machines/${machine.id}`}>{machine.name}</Link>
+          <li key={machine._id}>
+            <Link href={`/machines/${machine._id}`}>{machine.name}</Link>
           </li>
         ))}
       </ul>

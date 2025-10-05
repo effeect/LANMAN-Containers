@@ -32,16 +32,24 @@ const Machine = require("./models/Machine");
 
 // Handle Machine Requests
 app.post("/api/v2/machines", async (req, res) => {
-  const { username, password } = req.body;
+  const { name, username, password } = req.body;
 
-  if (!username || !password) {
+  if (!name || !username || !password) {
     return res.status(400).json({
-      error: "Windows Username and password are required in order to test this",
+      error: "Machine name, Windows username, and password are required.",
+    });
+  }
+
+  // Below is a check to evaluate that the machine name is not a conflict
+  const existing = await Machine.findOne({ name });
+  if (existing) {
+    return res.status(409).json({
+      error: "Machine Name Conflict. Please refer to Documentation",
     });
   }
 
   const machine = new Machine({
-    name: `Machine ${username}`,
+    name,
     username,
     password,
   });
@@ -63,6 +71,33 @@ app.get("/api/v2/machines", async (req, res) => {
   }
 });
 
+app.delete("/api/v2/machines/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deleted = await Machine.findByIdAndDelete(id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Machine not found" });
+    }
+    res
+      .status(200)
+      .json({ message: "Machine deleted successfully", machine: deleted });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to delete machine" });
+  }
+});
+
+app.get("/api/v2/machines/:id", async (req, res) => {
+  try {
+    const machine = await Machine.findById(req.params.id);
+    if (!machine) return res.status(404).json({ error: "Machine not found" });
+    res.json(machine);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch machine" });
+  }
+});
+
+//========================================================================
 app.get("/api/example-googles", (req, res) => {
   exec(
     "ansible-playbook playbooks/examples/ping-google.yml",

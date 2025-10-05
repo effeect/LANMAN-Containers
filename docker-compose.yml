@@ -38,6 +38,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ADMIN_PASS}
     volumes:
       - ./db:/data/db
+    # Comment out below to have full mongo logs, not recommended
+    command: mongod --quiet --logpath /dev/null
     networks:
       test:
 
