@@ -4,6 +4,12 @@ This project is a huge work in progress but it will be based in Docker
 
 `docker compose up -d`
 
+We have three main containers :
+
+- Next.JS Front-end
+- Mongo Database
+- Debian container with Ansible/Node.JS installed
+
 Things to do:
 
 - Create a quickstart script
