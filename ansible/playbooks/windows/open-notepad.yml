@@ -15,4 +15,4 @@
     - name: Ping the host to check there is connectivity
       win_ping:
     - name: Launch Notepad
-      win_shell: echo "Hello from Ansible" > C:\Temp\notepad.txt
+      win_shell: echo "Hello from Ansible, its Oliver here" > C:\Temp\notepad.txt

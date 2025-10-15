@@ -33,7 +33,7 @@ export default async function MachinePage({
         name="Run a Ansible Job with vars"
         endpoint="String"
         machine_id={machine._id}
-        job="windows/open"
+        job="windows/open-notepad"
       ></CommandButton>
     </div>
   );
