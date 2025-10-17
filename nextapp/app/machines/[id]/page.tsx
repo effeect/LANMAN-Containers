@@ -18,7 +18,7 @@ export default async function MachinePage({
       <h1 className="text-3xl font-bold mb-6 text-black">
         Machine : {machine.name}
       </h1>
-      <p className=" text-black ">Username : {machine.username}</p>
+      <p className=" text-black ">Username : PLACEHOLDER</p>
       <p className=" text-black ">IP Address : {machine.ip_address}</p>
       <p className=" text-black ">ID : {machine._id}</p>
       <p className=" text-black ">Created At : {machine.date}</p>

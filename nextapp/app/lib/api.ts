@@ -91,7 +91,8 @@ export const getMachinePingStatus = async (id: string) => {
   }
 };
 
-// AddMachine expects 3 arguements, machine name, username and password
+// AddMachine expects 3 arguements, machine name, username, password and IP Address
+// Please note that Username/Password is stored in Vault
 export const addMachine = async (data: {
   name: string;
   username: string;

@@ -1,4 +1,5 @@
 services:
+  # Next.js Application
   app:
     build: nextapp/.
     container_name: next-app
@@ -11,7 +12,26 @@ services:
       - ./nextapp:/app
     networks:
       test:
-
+  # HashiCorp Vault for secret management, for dev use only
+  vault:
+    image: hashicorp/vault:1.20.0
+    container_name: vault
+    cap_add:
+      - IPC_LOCK # Lock memory to prevent sensitive data from swapping to disk
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: ${VAULT_TOKEN} # Root token for dev mode
+    ports:
+      - "8200:8200" # Expose Vault on port 8200
+    command: server -dev # Start Vault in development mode
+    volumes:
+      - vault:/vault/file # For future use, persistent storage in production
+    healthcheck:
+      test: ["CMD", "vault", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      test:
   ansible:
     build: ansible/.
     container_name: ansible-runner
@@ -22,11 +42,12 @@ services:
       - ansible_node_modules:/app/node_modules
     working_dir: /app
     environment:
+      VAULT_TOKEN: ${VAULT_TOKEN}
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ADMIN_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ADMIN_PASS}
     networks:
       test:
-  # MongoDB, responsible for storing Data about the setup
+  # MongoDB, responsible for storing date about the setup
   mongodb:
     image: mongo:8.0.15
     container_name: mongodb
@@ -49,3 +70,7 @@ networks:
 
 volumes:
   ansible_node_modules:
+  vault:
+# for later implementation
+#volumes:
+#  - /etc/letsencrypt/live/vault.local:/vault/certs:ro

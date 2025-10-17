@@ -1,5 +1,6 @@
 // The big one
 import { spawn } from "child_process";
+import { getMachineCredentials } from "./vault-handler";
 
 export async function run(app, Machine) {
   app.post("/api/v2/ansible", async (req, res) => {
@@ -12,16 +13,16 @@ export async function run(app, Machine) {
       return res.status(400).send("Missing Job Description");
     }
     const machine = await Machine.findById(machineId);
-    console.log(machine);
-    console.log(job);
-
+    // Use the machine vault path to fetch the username/password for the job at hand :
+    const creds = await getMachineCredentials(machine.name);
+    console.log(creds);
     // Run the playbook below :
     const playbook = spawn("ansible-playbook", [
       `playbooks/${job}.yml`,
       "-i",
       `${machine.ip_address},`,
       "-e",
-      `username=${machine.username} password=${machine.password}`,
+      `username=${creds.username} password=${creds.password}`,
     ]);
 
     res.setHeader("Content-Type", "text/plain");
